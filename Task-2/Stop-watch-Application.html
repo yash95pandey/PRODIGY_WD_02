@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OJT Task 2: Stopwatch</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 100px;
+    background: #f0f0f0;
+  }
+  #time {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background-color: #ff9800;
+  }
+</style>
+</head>
+<body>
+
+<h1>Stopwatch</h1>
+<div id="time">00:00:00</div>
+<button id="start">Start</button>
+<button id="stop">Stop</button>
+<button id="reset">Reset</button>
+
+<script>
+let hours = 0, minutes = 0, seconds = 0;
+let timer = null;
+
+function updateTime() {
+  seconds++;
+  if(seconds === 60){ seconds = 0; minutes++; }
+  if(minutes === 60){ minutes = 0; hours++; }
+
+  let h = hours.toString().padStart(2,'0');
+  let m = minutes.toString().padStart(2,'0');
+  let s = seconds.toString().padStart(2,'0');
+
+  document.getElementById('time').innerText = `${h}:${m}:${s}`;
+}
+
+document.getElementById('start').addEventListener('click', () => {
+  if(!timer) timer = setInterval(updateTime, 1000);
+});
+
+document.getElementById('stop').addEventListener('click', () => {
+  clearInterval(timer);
+  timer = null;
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+  clearInterval(timer);
+  timer = null;
+  hours = minutes = seconds = 0;
+  document.getElementById('time').innerText = '00:00:00';
+});
+</script>
+
+</body>
+</html>
